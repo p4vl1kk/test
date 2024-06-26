@@ -58,6 +58,9 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
     implementation ("androidx.activity:activity-compose:1.4.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.4")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
