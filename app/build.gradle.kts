@@ -50,6 +50,8 @@ android {
 }
 
 dependencies {
+    implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("io.coil-kt:coil-compose:1.4.0")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("androidx.compose.ui:ui:1.3.1")
