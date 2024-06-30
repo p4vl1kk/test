@@ -31,17 +31,23 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(
+    viewModel: LoginViewModel = viewModel(),
+    navigateToDestination: () -> Unit // Функция для навигации на другой экран
+) {
     var url by remember { mutableStateOf("http://try.axxonsoft.com:8000/asip-api/") }
     var login by remember { mutableStateOf("root") }
     var password by remember { mutableStateOf("root") }
     val context = LocalContext.current
 
-    val state by viewModel.state.observeAsState(initial = LoginState())
+    val state = viewModel.state.observeAsState(initial = LoginState()).value
 
     DisposableEffect(Unit) {
         viewModel.init()
-        onDispose {}
+
+        onDispose {
+            // Очистка, если необходимо
+        }
     }
 
     Column(
@@ -74,25 +80,32 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            viewModel.connect(url, login, password)
+            viewModel.connect(url, login, password) { success ->
+                if (success) {
+                    navigateToDestination() // Переход на другой экран после успешной авторизации
+                } else {
+                    Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                }
+            }
         }) {
             Text("Login")
         }
-    }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 16.dp),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        Text(
-            text = if (state.version.isNotEmpty()) "App Version: ${state.version}" else "Loading version...",
-            style = TextStyle(
-                fontSize = 12.sp,
-                color = Color.Gray
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Text(
+                text = state.version.ifEmpty { "Loading version..." },
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                ),
+                modifier = Modifier.padding(bottom = 16.dp)
             )
-        )
+        }
     }
 
     LaunchedEffect(state.version) {
