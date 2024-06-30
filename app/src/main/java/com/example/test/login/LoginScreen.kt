@@ -2,6 +2,7 @@ package com.example.test.login
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,9 +22,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
@@ -33,15 +37,11 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
     var password by remember { mutableStateOf("root") }
     val context = LocalContext.current
 
-    val state = viewModel.state.observeAsState(initial = LoginState()).value
+    val state by viewModel.state.observeAsState(initial = LoginState())
 
     DisposableEffect(Unit) {
         viewModel.init()
-
-        onDispose {
-            // если бы нам было нужно что-то "выключить" в модели после ухода с этого экрана,
-            // то это делалось бы отсюда
-        }
+        onDispose {}
     }
 
     Column(
@@ -78,20 +78,30 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
         }) {
             Text("Login")
         }
+    }
 
-        // примерно так отобразится картинка на плитке
-        //Image(bitmap = state.bitmap.asImageBitmap(), contentDescription = null)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 16.dp),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        Text(
+            text = if (state.version.isNotEmpty()) "App Version: ${state.version}" else "Loading version...",
+            style = TextStyle(
+                fontSize = 12.sp,
+                color = Color.Gray
+            )
+        )
     }
 
     LaunchedEffect(state.version) {
         if (state.version.isNotEmpty())
             Toast.makeText(context, "Server Version: ${state.version}", Toast.LENGTH_SHORT).show()
-        // успешный коннект! отсюда открываем следующий экран
     }
 
     LaunchedEffect(state.error) {
         if (state.error.isNotEmpty())
             Toast.makeText(context, "Error: ${state.error}", Toast.LENGTH_SHORT).show()
     }
-
 }
