@@ -1,5 +1,6 @@
 package com.example.test.login
 
+import AppSettings
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,10 +36,12 @@ fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
     navigateToDestination: () -> Unit // Функция для навигации на другой экран
 ) {
-    var url by remember { mutableStateOf("http://try.axxonsoft.com:8000/asip-api/") }
-    var login by remember { mutableStateOf("root") }
-    var password by remember { mutableStateOf("root") }
     val context = LocalContext.current
+
+    var url by remember { mutableStateOf(AppSettings.getUrl(context) ?: "") } // http://try.axxonsoft.com:8000/asip-api/
+    var login by remember { mutableStateOf(AppSettings.getNickname(context) ?: "") } // root
+    var password by remember { mutableStateOf(AppSettings.getPassword(context) ?: "") } // root
+
 
     val state = viewModel.state.observeAsState(initial = LoginState()).value
 
@@ -46,7 +49,7 @@ fun LoginScreen(
         viewModel.init()
 
         onDispose {
-            // Очистка, если необходимо
+            // Можно провести очистку здесь, если нужно
         }
     }
 
@@ -60,7 +63,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = url,
             onValueChange = { url = it },
-            label = { Text("Server URL") },
+            label = { Text("Server url") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -82,9 +85,11 @@ fun LoginScreen(
         Button(onClick = {
             viewModel.connect(url, login, password) { success ->
                 if (success) {
+                    // Сохранение данных при успешной авторизации
+                    AppSettings.saveCredentials(context, url, login, password)
                     navigateToDestination() // Переход на другой экран после успешной авторизации
                 } else {
-                    Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Login error", Toast.LENGTH_SHORT).show()
                 }
             }
         }) {
@@ -106,11 +111,6 @@ fun LoginScreen(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }
-    }
-
-    LaunchedEffect(state.version) {
-        if (state.version.isNotEmpty())
-            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
     }
 
     LaunchedEffect(state.error) {
