@@ -41,6 +41,7 @@ fun SnapshotsScreen() {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
         ) {
+            //fixme хардкод
             val snapshotIndices = (1..6).toList()
             items(snapshotIndices) { index ->
                 SnapshotTile(index = index, bitmapState = bitmapState)
@@ -54,8 +55,7 @@ fun SnapshotTile(index: Int, bitmapState: MutableState<Bitmap?>) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
-            .border(1.dp, Color.Black),
+            .height(100.dp),
         contentAlignment = Alignment.Center
     ) {
         bitmapState.value?.let { bitmap ->

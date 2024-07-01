@@ -1,4 +1,4 @@
-package com.example.test.login
+package com.example.test.ui.login
 
 import AppSettings
 import android.widget.Toast
