@@ -27,7 +27,6 @@ fun SnapshotsScreen() {
             modifier = Modifier.padding(vertical = 16.dp)
         )
 
-        // Создаем LazyColumn для отображения плиток с изображениями
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -46,9 +45,9 @@ fun SnapshotTile(index: Int) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp) // Высоту можно настроить по своему усмотрению
-            .border(1.dp, Color.Black) // Фон плитки для наглядности
-            .padding(16.dp), // Отступы внутри плитки
+            .height(100.dp)
+            .border(1.dp, Color.Black)
+            .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(

@@ -110,7 +110,7 @@ fun LoginScreen(
 
     LaunchedEffect(state.version) {
         if (state.version.isNotEmpty())
-            Toast.makeText(context, "Server Version: ${state.version}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
     }
 
     LaunchedEffect(state.error) {
