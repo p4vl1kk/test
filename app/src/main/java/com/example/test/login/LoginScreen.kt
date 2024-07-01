@@ -42,7 +42,6 @@ fun LoginScreen(
     var login by remember { mutableStateOf(AppSettings.getNickname(context) ?: "") } // root
     var password by remember { mutableStateOf(AppSettings.getPassword(context) ?: "") } // root
 
-
     val state = viewModel.state.observeAsState(initial = LoginState()).value
 
     DisposableEffect(Unit) {
@@ -85,7 +84,6 @@ fun LoginScreen(
         Button(onClick = {
             viewModel.connect(url, login, password) { success ->
                 if (success) {
-                    // Сохранение данных при успешной авторизации
                     AppSettings.saveCredentials(context, url, login, password)
                     navigateToDestination() // Переход на другой экран после успешной авторизации
                 } else {

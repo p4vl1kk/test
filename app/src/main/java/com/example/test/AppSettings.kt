@@ -4,13 +4,13 @@ import androidx.preference.PreferenceManager
 
 object AppSettings {
     private const val KEY_URL = "url"
-    private const val KEY_NICKNAME = "nickname"
+    private const val KEY_USERNAME = "username"
     private const val KEY_PASSWORD = "password"
 
-    fun saveCredentials(context: Context, url: String, nickname: String, password: String) {
+    fun saveCredentials(context: Context, url: String, username: String, password: String) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putString(KEY_URL, url)
-            putString(KEY_NICKNAME, nickname)
+            putString(KEY_USERNAME, username)
             putString(KEY_PASSWORD, password)
         }
     }
@@ -22,7 +22,7 @@ object AppSettings {
 
     fun getNickname(context: Context): String? {
         return PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(KEY_NICKNAME, null)
+            .getString(KEY_USERNAME, null)
     }
 
     fun getPassword(context: Context): String? {

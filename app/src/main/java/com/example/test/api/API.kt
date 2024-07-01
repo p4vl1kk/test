@@ -10,7 +10,7 @@ interface API {
     @GET("product/version")
     suspend fun getServerVersion(): ServerVersionResponse
 
-    @GET("archive/media/{VIDEOSOURCEID}/{STARTTIME} ")
+    @GET("live/media/snapshot/Server1/DeviceIpint.23/SourceEndpoint.video:0:0")
     suspend fun getSnapshotsList(): SnapshotsListResponse
 
     @GET("camera/list")

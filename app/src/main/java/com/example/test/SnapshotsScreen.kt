@@ -29,7 +29,7 @@ fun SnapshotsScreen() {
         Text(
             text = "Snapshots Screen",
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold, // Ensure FontWeight is imported correctly
+            fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(vertical = 16.dp)
         )
 
@@ -41,7 +41,7 @@ fun SnapshotsScreen() {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
         ) {
-            val snapshotIndices = (1..6).toList() // Transform range to list
+            val snapshotIndices = (1..6).toList()
             items(snapshotIndices) { index ->
                 SnapshotTile(index = index, bitmapState = bitmapState)
             }
@@ -55,7 +55,7 @@ fun SnapshotTile(index: Int, bitmapState: MutableState<Bitmap?>) {
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
-            .border(1.dp, Color.Black), // Ensure Color is imported correctly
+            .border(1.dp, Color.Black),
         contentAlignment = Alignment.Center
     ) {
         bitmapState.value?.let { bitmap ->
@@ -64,7 +64,7 @@ fun SnapshotTile(index: Int, bitmapState: MutableState<Bitmap?>) {
                 contentDescription = null
             )
         } ?: run {
-            Text(text = "No Bitmap available") // Handle case where bitmap is null
+            Text(text = "No Bitmap available")
         }
     }
 }

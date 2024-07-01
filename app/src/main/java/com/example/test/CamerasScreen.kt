@@ -29,7 +29,7 @@ fun CamerasScreen() {
         Text(
             text = "Cameras Screen",
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold, // Ensure FontWeight is imported correctly
+            fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(vertical = 16.dp)
         )
 
@@ -55,7 +55,7 @@ fun CameraTile(index: Int, bitmapState: MutableState<Bitmap?>) {
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
-            .border(1.dp, Color.Black), // Ensure Color is imported correctly
+            .border(1.dp, Color.Black),
         contentAlignment = Alignment.Center
     ) {
         bitmapState.value?.let { bitmap ->
@@ -64,7 +64,7 @@ fun CameraTile(index: Int, bitmapState: MutableState<Bitmap?>) {
                 contentDescription = null
             )
         } ?: run {
-            Text(text = "No Bitmap available") // Handle case where bitmap is null
+            Text(text = "No Bitmap available")
         }
     }
 }
